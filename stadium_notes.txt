@@ -1,0 +1,480 @@
+801B9767: num pokemon
+80129D69: num pokemon (trade)
+
+a0=pfs a1=flag a2=address a3=buffer $v0=size (v0 not set until 80065974)
+80065910 osGbpakReadWrite
+8006599C gb_write
+80065A20 gb_read
+
+dump GB ram from  A580-B540 (length 0FC0)
+dump GB ram from  A000-BA60 (length 1A60)
+
+controller pointers:
+800A8100
+800A8168
+800A81D0
+800A8238
+
+801e138c = pokemon count?
+
+800255B8 read pokemon count
+80024AAC same <- runs as many time as you have pokemon
+
+pokemon count is copied to 80104BF9
+
+
+80115F80 - 13 times
+loc_80116044 - 256 times
+
+B07E = first pokemon nickname
+801E14DE -> 80081614
+
+
+8011BD69 - item count followed by item list
+
+80024A9C - code that checks item count 80024CC8
+80024D68 - code that reads item list
+
+copy items to 801C5B64
+
+
+pokemon struct = 0x54 long
+
+u8 species
+u8 gen_1_index_number
+u16 current_hp
+
+u8 pc_level
+u8 status
+u8 type1
+u8 type2
+
+u8 held_item
+u8 move1
+u8 move2
+u8 move3
+
+u8 move4
+u8 unknown_but_usually_89
+u16 ot_id
+
+
+u32 exp
+
+u16 hp_ev
+u16 attack_ev
+
+u16 defense_ev
+u16 speed_ev
+
+u16 special_ev
+u16 IVs
+
+
+u8 pp1 (current/max)
+u8 pp2 (current/max)
+u8 pp3 (current/max)
+u8 pp4 (current/max)
+
+u8 level
+u8 unknown_but_usually_00
+u16 max_hp
+
+u16 attack
+u16 defense
+
+u16 speed
+u16 special
+
+char[11] nickname
+char[11] original_trainer
+char[11] original_trainer_gb_encoding
+
+u8 unknown_but_usually_2A
+u16 unknown_but_usually_0000
+
+----------------------
+
+80129D68 - party pokemon count (16 bit)
+80129D6C - box when you press L
+80129D70 - box when you press R
+80129D74 - pokemon list (each is 0x54 long)
+
+intended: 80129D74 - 80129F6C (length 1F8)
+glitched: 80129D74 - 8012F174 (length 5400)
+
+8012A404 - box 1 pokemon count
+8012A410 - box 1 pokemon list
+
+- left side -
+
+801290C0 - general info
+
+80129D68 - party
+8012A404 - box 1
+8012AAA0 - box 2
+8012B13C - box 3
+8012B7D8 - box 4
+8012BE74 - box 5
+8012C510 - box 6
+8012CBAC - box 7
+8012D248 - box 8
+8012D8E4 - box 9
+8012DF80 - box 10
+8012E61C - box 11
+8012ECB8 - box 12
+
+intended: 8012ECB8 - 8012F354 (length 69C)
+glitched: 8012ECB8 - 80134070 (length 53B8)
+
+- right side -
+
+8012F354 - padding?
+8012F358 - general info
+
+80130000 - party
+8013069C - box 1
+80130D38 - box 2
+801313D4 - box 3
+80131A70 - box 4
+8013210C - box 5
+801327A8 - box 6
+80132E44 - box 7
+801334E0 - box 8
+80133B7C - box 9
+
+80134218 - box 10
+801348B4 - box 11
+80134F50 - box 12
+
+intended: 80134F50 - 801355EC (length 69C)
+glitched: 80134F50 - 8013A308 (length 53B8)
+
+80116508 - ???
+
+
+8011D7A8: last read of glitched region before crash
+8011867C: crash
+
+
+selected box: 801E0CAC
+read by 80021A30
+written by 80021A6C
+
+
+80125064
+
+
+145 pokemon is fine, 146 crashes...? and bulbasaur is 199
+
+146->122->16X
+
+8011BD69: number of items -> 80104BF8
+
+
+
+8029034C - pokemon in party
+80290970 - box 1
+
+80191790 - run for each box
+
+-------------------------
+
+see list
+
+pokemon count: 8011c6cc
+
+pokemon struct length: 0x5C
+u32 ptr_box
+u32 number
+party_struct
+
+run once per pokemon in box: 8002485C
+
+801BA408: party header (length=24)
+801BA42C: party
+801BA67C: box 1 header
+801BA7D4: box 1
+
+------------------
+
+801B9804: box set 1
+801B9824: box set 2
+801B9844: box set 3
+
+(...)
+
+801BA408: 0x24 - box info (length=0x1C)
+801BA42C: 0x230 - pokemon (length=0x5C) * 6
+801BA65C: 0x20 - pokemon_ptrs * 6
+
+801BA67C: 0x158 - box info (length=0x1C) * 12
+801BA7D4: 0x5648 - pokemon (length=0x5C) * 12 * 20
+801BFE1C: 0x3C8 - pokemon_ptrs * 12 * 20
+
+801C01E4: 0x158 - box info (length=0x1C) * 12
+801C033C: 0x5648 - pokemon (length=0x5C) * 12 * 20
+801C5984: 0x3C8 - pokemon_ptrs * 12 * 20
+
+
+box info:
+u32 ptr_boxset
+u32 box_number
+u32 1
+u32 0
+u32 ptr_pokemon_ptrs
+u32 box_size
+u32 box_size
+
+pokemon:
+u32 ptr_box
+u32 number
+struct poke_struct
+
+crash: after 8014F914->80162964->80024804->*80021DBC*
+
+
+
+8011D7A8 -> 8011867C crash
+
+------------
+
+801355EC: nothing?
+801355F4: u16 unk
+80135630: u16 unk2
+801356A8: u32 unk3
+801356B0: u32 pointer to any code to run!!!!! (referenced by 80013378)
+
+unk=
+0: revert
+1: nothing
+2: no major effect?
+3: freeze
+4-5: revert
+6: crash when scroll
+7: no effect, can't trade
+
+unk3=
+pointer that crashes if changed
+must point to address where second byte is even and +8 = 801356A0
+should be unchanged (80135830) or equal to 800AC844
+
+
+801DF403: pointer to GB BOX #12
+
+lui $t8, 0x801E
+addiu $v0, $zero, 0x003A
+sb $v0, 0xF403($t8)
+lui $v0, 0x2D29
+sw $v0, 0xF404($t8)
+
+lui $v0, 0x5075
+addiu $v0, $v0, 0x7420
+sw $v0, 0xF430($t8)
+lui $v0, 0x696E
+addiu $v0, $v0, 0x2074
+sw $v0, 0xF434($t8)
+lui $v0, 0x6865
+addiu $v0, $v0, 0x2062
+sw $v0, 0xF438($t8)
+lui $v0, 0x6167
+addiu $v0, $v0, 0x3f00
+sw $v0, 0xf43c($t8)
+lui $v0, 0x5965
+addiu $v0, $v0, 0x7300
+sw $v0, 0xF448($t8)
+sb $zero 0xF332($t8)
+
+addiu $v0, $zero, 0x434F
+sh $v0, 0xFD96($t8)
+lui $v0, 0x534D
+addiu $v0, $v0, 0x4F47
+sw $v0, 0xFD98($t8)
+sb $r0, 0xFD9C($t8)
+
+lui $t8, 0x8013
+lui $v0, 0x4E45
+addiu $v0, $v0, 0x4242
+sw $v0, 0x51D8($t8)
+addiu $v0, $zero, 0x0059
+sb $v0, 0x51DC($t8)
+addiu $v0, $zero, 0x0084
+sb $v0, 0x51A8($t8)
+addiu $v0, $zero, 0x0028
+sb $v0, 0x51CC($t8)
+lui $v0, 0x0096
+addiu $v0, $v0, 0x6400
+sw $v0, 0x51B0($t8)
+addiu $v0, $zero, 0x0D0D
+nop
+sh $v0, 0x51AE($t8)
+
+lui $t8, 0x801F
+lui $t7, 0x801E
+addiu $t6, $zero, 0x0C80
+loop:
+lw $v0, 0x5E74($t7)
+sw $v0, 0xEAF0($t8)
+addiu $t8, $t8, 0x0004
+addiu $t7, $t7, 0x0004
+addiu $t6, $t6, 0xFFFC
+bne $t6, $zero, loop
+nop
+
+lui $t8, 0x8027
+lui $t7, 0x801E
+addiu $t6, $zero, 0x0800
+loop2:
+lw $v0, 0x6AF4($t7)
+sw $v0, 0xF130($t8)
+addiu $t8, $t8, 0x0004
+addiu $t7, $t7, 0x0004
+addiu $t6, $t6, 0xFFFC
+bne $t6, $zero, loop2
+nop
+
+lui $t8, 0x800B
+addiu $v0, $zero, $0x0002
+sb $v0, 0xF732($t8)
+
+lui $t8, 0x8000
+lui $v0, 0x3c20
+addiu $v0, $v0, 0x8011
+sw $v0, 0x77A8($t8)
+lui $v0, 0x03e0
+addiu $v0, $v0, 0x0008
+sw $v0, 0x77AC($t8)
+lui $t8, 0x8011
+
+lui $v0, 0x3c20
+addiu $v0, $v0, 0x8028
+sw $v0, 0x0000($t8)
+lui $v0, 0xA7E0
+addiu $v0, $v0, 0x2d38
+sw $v0, 0x0004($t8)
+lui $v0, 0x240e
+addiu $v0, $v0, 0x0016
+sw $v0, 0x0008($t8)
+lui $v0, 0xA7EE
+addiu $v0, $v0, 0x2318
+sw $v0, 0x000C($t8)
+lui $v0, 0x8fbf
+addiu $v0, $v0, 0x0014
+sw $v0, 0x0010($t8)
+lui $v0, 0x27bd
+addiu $v0, $v0, 0x0018
+sw $v0, 0x0014($t8)
+lui $v0, 0x03e0
+addiu $v0, $v0, 0x0008
+sw $v0, 0x0018($t8)
+sw $zero, 0x001C($t8)
+
+jr $ra
+
+credits = 8002A5DC? no
+
+8012F369: box being displayed on the right
+
+mewtwo HP: 800AE77E,800FCB2E,80282D38 -> change last one
+
+cursor on mewtwo: 80117DC8=0003 (read by 80029020->80117B64)
+
+round 2: 800AF732 -> if equal to 02, mewtwo is always there?
+
+pokemon textures in 801E9370-801FB2F0 (c80 per pokemon) - rgba 5551 - 28*28*2
+background texture in 8019757C-8019D28C
+
+801DF430: trade this pokemon? string
+801DFD96: DITTO
+
+main loop: 8000791C-80007960 (with detour into 80007778)
+
+
+-----
+patch 800077A8-800077AC:
+
+lui $ra, 0x8011
+jr $ra
+
+3c1f8011
+03e00008
+
+-----
+patch 80110000:
+
+lui $ra, 0x8028
+sh $zero, 0x2D38($ra)
+addiu $t6, $zero, 0x0016
+sh $t6, 0x2318($ra)
+lw $ra, 0x0014($sp)
+addiu $sp, $sp, 0x0018
+jr $ra
+nop
+
+3c1f8028
+A7E02D38
+240e0016
+A7EE2318
+8fbf0014
+27bd0018
+03e00008
+00000000
+
+----
+80193A30
+
+music: program counter = 8004ADB0 - registers a0 - a2 matter
+a1 = 8004B8E0
+a0,a2 vary - unknown purpose
+
+ditto texture: 8026F130-8026F930 (20*20*2)z
+
+
+
+
+80000000
+
+
+801290C0-80129D68 general info
+80129D68-8012F354 party, box 1-12 (first)
+8012F358-80130000 general info
+80130000-801355EC party, box 1-12 (second)
+801355F0-...
+
+801E09E0-801E19A0 first cart main data
+801E19B0-801E3410 first cart box 1-6
+801E3410-801E4E70 first cart box 7-12
+801E4EA0-801E5E60 second cart main data
+801E5E70-801E78D0 second cart box 1-6
+801E78D0-801E9330 second cart box 7-12
+
+
+800044A0 - run on transition?
+--> 8013A2C0 credits
+29220
+2924C
+29278
+29018
+8013A2C0
+-> 800292EC
+
+
+
+
+800291E0: credits
+->8002A5DC
+
+(801356B0)
+
+main loop (lab: 80115E08)
+return address: 8008181C
+
+80006414 crash
+800062E4 blah
+8002A400 - trigger mewtwo battle code
+8002B390-8002B3E0 - change screens
+80075668: what screen to go to
+
+
+
+to warp to credits: load A982 (or A981 or A478) to 8002B432 - activates when return to white city
