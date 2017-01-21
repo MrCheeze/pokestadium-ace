@@ -1,6 +1,8 @@
 # pokestadium-ace
 Notes and code related to getting arbitrary code execution on Pokemon Stadium for the N64. For a demonstration payload, [see here](https://www.youtube.com/watch?v=Bb0v-VDsBkQ).
 
+----
+
 The key point of this exploit is that getting ACE in Stadium requires first getting ACE in Pokemon R/B/Y (or a similarly powerful memory manipulation glitch), so that the Game Boy save can be manipulated at will. However, since it is possible to play first-generation Pokemon games within Stadium at the GB Tower, it is still possible to do everything from within Stadium proper.
 
 Two N64 controllers with two Transfer Paks and two Game Boy games are required to enter Pokemon Stadium's trading system, where the exploit lies. Both games must also have a Pokedex, and be saved in a Pokemon Center. However, only the second game's save file needs to be glitched at all.
