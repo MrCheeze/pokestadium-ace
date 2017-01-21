@@ -11,33 +11,33 @@ Two N64 controllers with two Transfer Paks and two Game Boy games are required t
 
 When using the trade machine, each game's Pokemon boxes are converted from R/B/Y's format to Stadium's format, and placed at the following locations in memory.
 
-80129D68 - game 1 party
-8012A404 - game 1 box 1
-8012AAA0 - game 1 box 2
-8012B13C - game 1 box 3
-8012B7D8 - game 1 box 4
-8012BE74 - game 1 box 5
-8012C510 - game 1 box 6
-8012CBAC - game 1 box 7
-8012D248 - game 1 box 8
-8012D8E4 - game 1 box 9
-8012DF80 - game 1 box 10
-8012E61C - game 1 box 11
-8012ECB8 - game 1 box 12
+    80129D68 - game 1 party
+    8012A404 - game 1 box 1
+    8012AAA0 - game 1 box 2
+    8012B13C - game 1 box 3
+    8012B7D8 - game 1 box 4
+    8012BE74 - game 1 box 5
+    8012C510 - game 1 box 6
+    8012CBAC - game 1 box 7
+    8012D248 - game 1 box 8
+    8012D8E4 - game 1 box 9
+    8012DF80 - game 1 box 10
+    8012E61C - game 1 box 11
+    8012ECB8 - game 1 box 12
 
-80130000 - game 2 party
-8013069C - game 2 box 1
-80130D38 - game 2 box 2
-801313D4 - game 2 box 3
-80131A70 - game 2 box 4
-8013210C - game 2 box 5
-801327A8 - game 2 box 6
-80132E44 - game 2 box 7
-801334E0 - game 2 box 8
-80133B7C - game 2 box 9
-80134218 - game 2 box 10
-801348B4 - game 2 box 11
-80134F50 - game 2 box 12
+    80130000 - game 2 party
+    8013069C - game 2 box 1
+    80130D38 - game 2 box 2
+    801313D4 - game 2 box 3
+    80131A70 - game 2 box 4
+    8013210C - game 2 box 5
+    801327A8 - game 2 box 6
+    80132E44 - game 2 box 7
+    801334E0 - game 2 box 8
+    80133B7C - game 2 box 9
+    80134218 - game 2 box 10
+    801348B4 - game 2 box 11
+    80134F50 - game 2 box 12
 
 Each box contains a half-word for the number of Pokemon in the box, a pointer to the previous box, and a pointer to the next box, followed by 20 Pokemon structs. Each Pokemon struct is 0x54 bytes long and has the following format:
 
