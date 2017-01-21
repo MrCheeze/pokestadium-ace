@@ -1,8 +1,6 @@
 # pokestadium-ace
 Notes and code related to getting arbitrary code execution on Pokemon Stadium for the N64. For a demonstration payload, [see here](https://www.youtube.com/watch?v=Bb0v-VDsBkQ).
 
-----
-
 The key point of this exploit is that getting ACE in Stadium requires first getting ACE in Pokemon R/B/Y (or a similarly powerful memory manipulation glitch), so that the Game Boy save can be manipulated at will. However, since it is possible to play first-generation Pokemon games within Stadium at the GB Tower, it is still possible to do everything from within Stadium proper.
 
 Two N64 controllers with two Transfer Paks and two Game Boy games are required to enter Pokemon Stadium's trading system, where the exploit lies. Both games must also have a Pokedex, and be saved in a Pokemon Center. However, only the second game's save file needs to be glitched at all.
@@ -43,57 +41,57 @@ When using the trade machine, each game's Pokemon boxes are converted from R/B/Y
 
 Each box contains a half-word for the number of Pokemon in the box, a pointer to the previous box, and a pointer to the next box, followed by 20 Pokemon structs. Each Pokemon struct is 0x54 bytes long and has the following format:
 
-  u8 species
-  u8 gen_1_index_number
-  u16 current_hp
+    u8 species
+    u8 gen_1_index_number
+    u16 current_hp
 
-  u8 pc_level
-  u8 status
-  u8 type1
-  u8 type2
+    u8 pc_level
+    u8 status
+    u8 type1
+    u8 type2
 
-  u8 held_item
-  u8 move1
-  u8 move2
-  u8 move3
+    u8 held_item
+    u8 move1
+    u8 move2
+    u8 move3
 
-  u8 move4
-  u8 unknown_but_usually_89
-  u16 ot_id
+    u8 move4
+    u8 unknown_but_usually_89
+    u16 ot_id
 
-  u32 exp
+    u32 exp
 
-  u16 hp_ev
-  u16 attack_ev
+    u16 hp_ev
+    u16 attack_ev
 
-  u16 defense_ev
-  u16 speed_ev
+    u16 defense_ev
+    u16 speed_ev
 
-  u16 special_ev
-  u16 IVs
+    u16 special_ev
+    u16 IVs
 
-  u8 pp1 (current/max)
-  u8 pp2 (current/max)
-  u8 pp3 (current/max)
-  u8 pp4 (current/max)
+    u8 pp1 (current/max)
+    u8 pp2 (current/max)
+    u8 pp3 (current/max)
+    u8 pp4 (current/max)
 
-  u8 level
-  u8 unknown_but_usually_00
-  u16 max_hp
+    u8 level
+    u8 unknown_but_usually_00
+    u16 max_hp
 
-  u16 attack
-  u16 defense
+    u16 attack
+    u16 defense
 
-  u16 speed
-  u16 special
+    u16 speed
+    u16 special
 
-  char[11] nickname
-  char[11] original_trainer
-  char[11] original_trainer_gb_encoding
+    char[11] nickname
+    char[11] original_trainer
+    char[11] original_trainer_gb_encoding
 
-  u8 unknown_but_usually_2A
-  u16 unknown_but_usually_0000
-  
+    u8 unknown_but_usually_2A
+    u16 unknown_but_usually_0000
+
 If the gameboy save says there is more than 20 Pokemon in a box, the buffer will overflow, overwriting whatever comes in memory after it. Nothing useful whatsoever happens from overflowing beyond Game 1 Box 12, but some interesting things are located after Game 2 Box 12. By far the most notable is 801356B0, a code pointer. If this pointer is nonzero, the game will automatically jump execution to wherever it points when on the "Choose the Game Paks for trading" screen. We can overwrite this pointer with any value we want by making the second gameboy game have 23 Pokemon in box 12. However, to prevent crashing, we must take care not to overwrite other variables nearby in memory - or rather, to overwrite them with the same value they had originally. To be specific, the pointer at 801356A8 must keep its current value of 80135830, and the halfword at 80135630 must remain zero (the latter requires us to actually place a 0x50 rather than a zero in the GB save file, due to the conversion from R/B/Y's encoding to ASCII).
 
 As you would probably expect, we change the code pointer at 801356B0 to point to somewhere within the Game Boy save itself. Therefore it's necessary to mention where exactly the save files are copied into N64 memory. Note that if the main data states that the player has yet to ever change boxes, then the additional box data is never copied to memory.
