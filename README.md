@@ -102,6 +102,7 @@ GB Cart 1:
 * copy from GB save file 2580-3540 to N64 ram 801E09E0-801E19A0 (first cart main data)
 * copy from GB save file 4000-5A60 to N64 ram 801E19B0-801E3410 (first cart box 1-6)
 * copy from GB save file 6000-7A60 to N64 ram 801E3410-801E4E70 (first cart box 7-12)
+
 GB Cart 2:
 * copy from GB save file 2580-3540 to N64 ram 801E4EA0-801E5E60 (second cart main data)
 * copy from GB save file 4000-5A60 to N64 ram 801E5E70-801E78D0 (second cart box 1-6)
